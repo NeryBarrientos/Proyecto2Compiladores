@@ -1,0 +1,180 @@
+<inicio> ::= <instrucciones> EOF
+
+<instrucciones> ::= <instrucciones> <instruccion>
+                 | <instruccion>
+
+<instruccion> ::= <echo>
+               | <declaracion>
+               | <instrif>
+               | <incremento_decremento>
+               | <for>
+               | <asignacion>
+               | <switch>
+               | <transferencia>
+               | <while>
+               | <loop>
+               | <dountil>
+               | <funcion>
+               | <metodos>
+               | <llamadafuncion1>
+               | <execute>
+               | error PYC
+               | error LLAVEDER
+
+<echo> ::= ECHO <expresion> PYC
+
+<expresion> ::= INT
+             | PARIZQ <expresion> PARDER
+             | DOUBLE
+             | BOOL
+             | CHAR
+             | NULL
+             | CADENA
+             | <expresion> MAS <expresion>
+             | <expresion> MENOS <expresion>
+             | <expresion> POR <expresion>
+             | <expresion> DIV <expresion>
+             | <expresion> POW <expresion>
+             | <expresion> RAIZ <expresion>
+             | <expresion> MOD <expresion>
+             | MENOS <expresion>
+             | <expresion> IGUALIGUAL <expresion>
+             | <expresion> DIFERENTE <expresion>
+             | <expresion> MENORIGUAL <expresion>
+             | <expresion> MAYORIGUAL <expresion>
+             | <expresion> MENOR <expresion>
+             | <expresion> MAYOR <expresion>
+             | <expresion> OR <expresion>
+             | <expresion> AND <expresion>
+             | NOT <expresion>
+             | <ptolower>
+             | <pround>
+             | <ptoupper>
+             | <ptostring>
+             | <ptruncate>
+             | <length>
+             | <pis>
+             | <casteo>
+             | ID
+             | ID CORCHETEIZQ <expresion> CORCHETEDER
+             | ID CORCHETEIZQ <expresion> CORCHETEDER CORCHETEIZQ <expresion> CORCHETEDER
+             | <llamadafuncion>
+             | <asignacion>
+
+<instrif> ::= IF PARIZQ <expresion> PARDER LLAVEIZQ <ins> LLAVEDER
+            | IF PARIZQ <expresion> PARDER LLAVEIZQ <ins> LLAVEDER ELSE LLAVEIZQ <ins> LLAVEDER
+            | IF PARIZQ <expresion> PARDER LLAVEIZQ <ins> LLAVEDER <elseif>
+
+<ins> ::= <instrucciones>
+        | /* Nada */
+
+<elseif> ::= ELSE IF PARIZQ <expresion> PARDER LLAVEIZQ <ins> LLAVEDER <elseif>
+           | ELSE IF PARIZQ <expresion> PARDER LLAVEIZQ <ins> LLAVEDER <elseOpcional>
+
+<elseOpcional> ::= ELSE LLAVEIZQ <ins> LLAVEDER
+                 | /* Nada */
+
+<else> ::= ELSE LLAVEIZQ <ins> LLAVEDER
+
+<tipo> ::= PDOUBLE
+        | PCADENA
+        | PINT
+        | PBOOLEAN
+        | PCHAR
+
+<ptolower> ::= TOLOWER PARIZQ <expresion> PARDER
+<ptoupper> ::= TOUPPER PARIZQ <expresion> PARDER
+<ptostring> ::= TOSTRING PARIZQ <expresion> PARDER
+<pround> ::= ROUND PARIZQ <expresion> PARDER
+<ptruncate> ::= TRUNCATE PARIZQ <expresion> PARDER
+<length> ::= ID PUNTO LENGTH PARIZQ PARDER
+           | CADENA PUNTO LENGTH PARIZQ PARDER
+           | CORCHETEIZQ <listavalores> CORCHETEDER PUNTO LENGTH PARIZQ PARDER
+           | CORCHETEIZQ CORCHETEIZQ <listavalores> CORCHETEDER COMA CORCHETEIZQ <listavalores> CORCHETEDER CORCHETEDER PUNTO LENGTH PARIZQ PARDER
+           | LENGTH PARIZQ ID PARDER
+
+<pis> ::= <expresion> IS <tipo>
+
+<declaracion> ::= LET <ids> DOSPUNTOS <tipo> IGUAL <Pdeclaracion> PYC
+               | LET <ids> DOSPUNTOS <tipo> PYC
+               | CONST <ids> DOSPUNTOS <tipo> IGUAL <Pdeclaracion> PYC
+               | CONST <ids> DOSPUNTOS <tipo> PYC
+               | LET <ids> DOSPUNTOS <tipo> CORCHETEIZQ CORCHETEDER IGUAL NEW VECTOR <tipo> CORCHETEIZQ <expresion> CORCHETEDER PYC
+               | LET <ids> DOSPUNTOS <tipo> CORCHETEIZQ CORCHETEDER IGUAL CORCHETEIZQ <listavalores> CORCHETEDER PYC
+               | LET <ids> DOSPUNTOS <tipo> CORCHETEIZQ CORCHETEDER CORCHETEIZQ CORCHETEDER IGUAL NEW VECTOR <tipo> CORCHETEIZQ <expresion> CORCHETEDER CORCHETEIZQ <expresion> CORCHETEDER PYC
+               | LET <ids> DOSPUNTOS <tipo> CORCHETEIZQ CORCHETEDER CORCHETEIZQ CORCHETEDER IGUAL CORCHETEIZQ CORCHETEIZQ <listavalores> CORCHETEDER COMA CORCHETEIZQ <listavalores> CORCHETEDER CORCHETEDER PYC
+
+<Pdeclaracion> ::= <expresion>
+
+<ids> ::= <ids> COMA ID
+        | ID
+
+<casteo> ::= CAST PARIZQ <expresion> AS <tipo> PARDER
+
+<incremento_decremento> ::= ID MASMAS PYC
+                          | ID MENOSMENOS PYC
+
+<for> ::= FOR PARIZQ <varfor> <expresion> PYC <actualizacion> PARDER LLAVEIZQ <instrucciones> LLAVEDER
+
+<actualizacion> ::= ID MASMAS
+                  | ID MENOSMENOS
+                  | <asignacion>
+
+<asignacion> ::= ID IGUAL <expresion> PYC
+               | ID CORCHETEIZQ <expresion> CORCHETEDER IGUAL <expresion> PYC
+               | ID CORCHETEIZQ <expresion> CORCHETEDER CORCHETEIZQ <expresion> CORCHETEDER IGUAL <expresion> PYC
+
+<varfor> ::= <declaracion>
+           | <asignacion>
+
+<switch> ::= SWITCH PARIZQ <expresion> PARDER LLAVEIZQ <cases> LLAVEDER
+
+<cases> ::= <cases> <case>
+          | <case>
+
+<case> ::= CASE <expresion> DOSPUNTOS <inscase>
+         | DEFAULT DOSPUNTOS <inscase>
+
+<inscase> ::= <instrucciones>
+            | /* Nada */
+
+<transferencia> ::= BREAK PYC
+                  | CONTINUE PYC
+                  | RETURN <expret> PYC
+                  | RETURN PYC
+
+<expret> ::= <expresion>
+
+<while> ::= WHILE PARIZQ <expresion> PARDER LLAVEIZQ <instrucciones> LLAVEDER
+
+<loop> ::= LOOP LLAVEIZQ <instrucciones> LLAVEDER
+
+<dountil> ::= DO LLAVEIZQ <instrucciones> LLAVEDER UNTIL PARIZQ <expresion> PARDER PYC
+
+<listavalores> ::= <listavalores> COMA <expresion>
+                | <expresion>
+
+<metodos> ::= FUNCTION VOID ID PARIZQ <parametros> PARDER LLAVEIZQ <instrucciones> LLAVEDER
+
+<parametros> ::= <parametros> COMA <dec2>
+               | <dec2>
+
+<dec2> ::= <tipo> ID
+         | ID DOSPUNTOS <tipo> IGUAL <expresion>
+         | ID DOSPUNTOS <tipo>
+         | <tipo> ID CORCHETEIZQ CORCHETEDER
+         | /* Nada */
+
+<funcion> ::= FUNCTION <tipo> ID PARIZQ <parametros> PARDER LLAVEIZQ <instrucciones> LLAVEDER
+
+<llamadafuncion1> ::= ID PARIZQ <parametros_llamada> PARDER PYC
+
+<llamadafuncion> ::= ID PARIZQ <parametros_llamada> PARDER
+
+<parametros_llamada> ::= <parametros_llamada> COMA <paramxd>
+                       | <paramxd>
+                       | /* Nada */
+
+<paramxd> ::= <expresion>
+
+<execute> ::= EXECUTE PARIZQ CADENA PARDER PYC

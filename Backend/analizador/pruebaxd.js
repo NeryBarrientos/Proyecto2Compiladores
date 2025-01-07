@@ -1,0 +1,1 @@
+const Print = require("../interprete/instruccion/Print.js");

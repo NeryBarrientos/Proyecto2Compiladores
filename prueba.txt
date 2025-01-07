@@ -1,0 +1,8 @@
+echo 5;
+echo "Hola Mundo";
+echo 'a';
+echo true;
+echo 54.25;
+echo "Hola Mundo " + '5';
+echo 5+8 == 13;
+echo cast(70 as char) ;
